@@ -95,7 +95,9 @@ func minPosInt(a, b int) int {
 // ReadEvent scans the EventStream for events.
 func (e *EventStreamReader) ReadEvent() ([]byte, error) {
 	if e.scanner.Scan() {
-		event := e.scanner.Bytes()
+		eventScan := e.scanner.Bytes()
+		event := make([]byte, len(eventScan))
+		copy(event, eventScan)
 		return event, nil
 	}
 	if err := e.scanner.Err(); err != nil {
